@@ -4,13 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>বাংলাদেশ মুজাহিদ কমিটি, বাহাদুরপুর ইউনিয়ন শাখা</title>
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Hind Siliguri -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <style>
@@ -32,12 +29,10 @@
       transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
     }
 
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #e2e8f0; }
     ::-webkit-scrollbar-thumb { background: #047857; border-radius: 9999px; }
 
-    /* Print Styles for Standard Money Receipt & Official Reports */
     @media print {
       body * { visibility: hidden !important; }
       #print-area, #print-area * { visibility: visible !important; }
@@ -58,10 +53,10 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <!-- Toast Notification Container (Replaces alert()) -->
+  <!-- Toast Notification Container -->
   <div id="toast-container" class="fixed top-4 right-4 z-[100] flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0 no-print"></div>
 
-  <!-- Custom Confirmation Modal (Replaces confirm()) -->
+  <!-- Custom Confirmation Modal -->
   <div id="confirm-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] hidden items-center justify-center p-4 no-print">
     <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-emerald-100">
       <div class="flex items-center gap-3 text-rose-600 mb-3">
@@ -78,7 +73,7 @@
     </div>
   </div>
 
-  <!-- Top Bar: Emergency Contacts, bamuc.org & Live Auto-Sync Badge -->
+  <!-- Top Bar -->
   <div class="bg-emerald-950 text-emerald-100 text-xs sm:text-sm py-2 px-4 border-b border-emerald-800 no-print">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
       <div class="flex flex-wrap items-center gap-2 sm:gap-3">
@@ -90,7 +85,6 @@
         <a href="tel:01735817413" class="hover:text-amber-300 transition font-medium">01735817413</a>
       </div>
       <div class="flex items-center gap-2 sm:gap-3">
-        <!-- Auto Sync Live Indicator -->
         <button onclick="manualSyncNow()" title="ক্লিক করে এখনই গুগল শিট থেকে সিংক করুন"
                 class="inline-flex items-center gap-1.5 bg-emerald-900 hover:bg-emerald-800 px-2.5 py-1 rounded-full border border-emerald-700 text-xs transition">
           <span id="sync-dot" class="w-2 h-2 rounded-full bg-amber-400"></span>
@@ -112,7 +106,6 @@
       <div class="flex items-center gap-3 sm:gap-4 text-center sm:text-left flex-col sm:flex-row">
         <!-- Official Logo Container -->
         <div class="w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-2xl p-1.5 shadow-xl border-2 border-amber-400 flex items-center justify-center shrink-0 overflow-hidden" id="header-logo-box">
-          <!-- Faithful Official SVG Emblem of Bangladesh Mujahid Committee -->
           <svg id="default-bmc-svg" viewBox="0 0 220 220" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <path d="M110 8 C65 35, 48 65, 48 105 L48 125 L35 125 L35 155 L185 155 L185 125 L172 125 L172 105 C172 65, 155 35, 110 8 Z" fill="#065f46" stroke="#111827" stroke-width="5"/>
             <path d="M110 15 C70 40, 55 68, 55 105 L55 130 L42 130 L42 150 L178 150 L178 130 L165 130 L165 105 C165 68, 150 40, 110 15 Z" fill="#ffffff" stroke="#dc2626" stroke-width="4"/>
@@ -146,7 +139,6 @@
         </div>
       </div>
 
-      <!-- Auth Buttons / Active User Badge -->
       <div class="flex flex-wrap items-center justify-center gap-2" id="header-auth-controls"></div>
     </div>
 
@@ -173,7 +165,7 @@
             <i class="fa-solid fa-file-invoice"></i> মাসিক ও বাৎসরিক রিপোর্ট
           </button>
           <button onclick="switchTab('settings')" data-tab="settings" class="nav-btn whitespace-nowrap px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition">
-            <i class="fa-solid fa-sliders"></i> এলাকা, স্লাইডার ও অটো-সিংক
+            <i class="fa-solid fa-sliders"></i> এলাকা, ড্রাইভ ও অটো-সিংক
           </button>
         </div>
       </div>
@@ -205,17 +197,14 @@
       </div>
     </div>
 
-    <!-- ==================== TAB 1: DASHBOARD (MAIN SLIDER + RIGHT SIDEBAR LEADERS SLIDER) ==================== -->
+    <!-- ==================== TAB 1: DASHBOARD ==================== -->
     <section id="tab-dashboard" class="tab-content space-y-6">
-
-      <!-- Split Hero Grid: Left 8 Cols (Main Islamic Slider) | Right 4 Cols (Leaders/Officials Slider with Local Photo Upload) -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
 
         <!-- Left: Main Islamic Slider -->
-        <div class="lg:col-span-8 relative rounded-3xl overflow-hidden shadow-xl border-2 border-emerald-800/20 bg-emerald-950 min-h-[280px] sm:min-h-[360px]">
+        <div class="lg:col-span-8 relative rounded-3xl overflow-hidden shadow-xl border-2 border-emerald-800/20 bg-emerald-950 min-h-[280px] sm:min-h-[370px]">
           <div id="main-slider-container" class="w-full h-full relative"></div>
 
-          <!-- Controls -->
           <button onclick="prevMainSlide()" aria-label="পূর্ববর্তী স্লাইড" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/45 hover:bg-black/75 text-white flex items-center justify-center backdrop-blur-sm transition z-20">
             <i class="fa-solid fa-chevron-left"></i>
           </button>
@@ -223,17 +212,15 @@
             <i class="fa-solid fa-chevron-right"></i>
           </button>
 
-          <!-- Upload Slide Photo Button (Admin Only) -->
           <button onclick="openSlideUploadModal()" class="admin-only-btn hidden absolute top-3 right-3 z-20 px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-emerald-950 font-bold text-xs shadow-lg flex items-center gap-1.5">
-            <i class="fa-solid fa-camera"></i> গ্যালারি থেকে স্লাইডার ছবি যোগ
+            <i class="fa-solid fa-camera"></i> স্লাইডার ছবি যোগ (ড্রাইভ / গ্যালারি)
           </button>
 
           <div id="main-slider-dots" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-20"></div>
         </div>
 
-        <!-- Right: Leaders & Officials Slider (দায়িত্বশীলদের দায়িত্ব ও ছবিসহ স্লাইডার) -->
+        <!-- Right: Dayitwoshil (দায়িত্বশীলদের দায়িত্ব ও ছবি সহ স্লাইডার) -->
         <div class="lg:col-span-4 bg-white rounded-3xl shadow-xl border-2 border-amber-400/60 overflow-hidden flex flex-col justify-between">
-          <!-- Card Header -->
           <div class="islamic-pattern px-4 py-3 text-white flex items-center justify-between border-b-2 border-amber-400">
             <div>
               <h3 class="text-sm sm:text-base font-bold text-amber-300 flex items-center gap-1.5">
@@ -242,21 +229,17 @@
               <p class="text-[11px] text-emerald-100">পদবী, দায়িত্ব ও পরিচিতি</p>
             </div>
             <div class="flex items-center gap-1">
-              <button onclick="openLeaderModal()" class="admin-only-btn hidden px-2.5 py-1 rounded-lg bg-amber-400 hover:bg-amber-500 text-emerald-950 font-bold text-xs shadow" title="লোকাল স্টোরেজ থেকে ছবি ও দায়িত্বশীল যোগ করুন">
+              <button onclick="openLeaderModal()" class="admin-only-btn hidden px-2.5 py-1 rounded-lg bg-amber-400 hover:bg-amber-500 text-emerald-950 font-bold text-xs shadow" title="দায়িত্বশীল ও ছবি যোগ করুন">
                 <i class="fa-solid fa-plus"></i> যোগ করুন
               </button>
-              <button onclick="openAllLeadersModal()" class="px-2.5 py-1 rounded-lg bg-white/15 hover:bg-white/25 text-white text-xs font-semibold" title="সকল দায়িত্বশীল দেখুন">
+              <button onclick="openAllLeadersModal()" class="px-2.5 py-1 rounded-lg bg-white/15 hover:bg-white/25 text-white text-xs font-semibold">
                 সকল
               </button>
             </div>
           </div>
 
-          <!-- Active Leader Slide Body -->
-          <div id="leader-slider-body" class="p-5 flex-grow flex flex-col items-center justify-center text-center relative bg-gradient-to-b from-emerald-50/60 to-white">
-            <!-- Populated dynamically via JS -->
-          </div>
+          <div id="leader-slider-body" class="p-5 flex-grow flex flex-col items-center justify-center text-center relative bg-gradient-to-b from-emerald-50/60 to-white"></div>
 
-          <!-- Leader Slider Footer Navigation -->
           <div class="px-4 py-2.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
             <button onclick="prevLeaderSlide()" class="px-3 py-1 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-900 text-xs font-bold transition">
               <i class="fa-solid fa-arrow-left mr-1"></i> পূর্ববর্তী
@@ -358,7 +341,7 @@
             <h2 class="text-xl font-bold text-emerald-900 flex items-center gap-2">
               <i class="fa-solid fa-address-book text-emerald-600"></i> সদস্য ডাটাবেজ ও যোগাযোগ প্যানেল
             </h2>
-            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">সকল সদস্যের তথ্য অনুসন্ধান, গুগল শিটস অটো-সিংক ও হোয়াটসঅ্যাপ মেসেজিং</p>
+            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">স্বয়ংক্রিয় ক্রমিক সদস্য নম্বর, গুগল শিটস সিংক ও হোয়াটসঅ্যাপ মেসেজিং</p>
           </div>
           <div class="flex flex-wrap gap-2">
             <a href="https://bamuc.org/" target="_blank" rel="noopener noreferrer"
@@ -374,7 +357,6 @@
           </div>
         </div>
 
-        <!-- Member Search Bar -->
         <div class="grid grid-cols-1 md:grid-cols-12 gap-3 my-4 bg-emerald-50/70 p-4 rounded-2xl border border-emerald-100">
           <div class="md:col-span-5">
             <label class="block text-xs font-bold text-emerald-900 mb-1">সদস্য নম্বর, নাম বা মোবাইল নম্বর লিখুন</label>
@@ -393,7 +375,6 @@
           </div>
         </div>
 
-        <!-- Members Table -->
         <div class="overflow-x-auto rounded-xl border border-slate-200">
           <table class="w-full text-left border-collapse">
             <thead>
@@ -772,7 +753,7 @@
       </div>
     </section>
 
-    <!-- ==================== TAB 7: SETTINGS, DYNAMIC AREAS, LOCAL PHOTO SLIDERS & AUTO SYNC ==================== -->
+    <!-- ==================== TAB 7: SETTINGS, DRIVE IMAGES, AREAS & AUTO SYNC ==================== -->
     <section id="tab-settings" class="tab-content hidden space-y-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
@@ -782,7 +763,7 @@
             <h3 class="text-lg font-bold text-emerald-900 flex items-center gap-2">
               <i class="fa-solid fa-rotate text-emerald-600"></i> Google Sheets দ্বিমুখী অটো-সিংক সেটিংস
             </h3>
-            <p class="text-xs text-slate-500 mt-0.5">নতুন তথ্য গুগল শিটে পাঠাবে এবং প্রতি ৬০ সেকেন্ডে শিট থেকে নতুন তথ্য অটো সিংক করবে</p>
+            <p class="text-xs text-slate-500 mt-0.5">Fetch + JSONP ফলব্যাকসহ প্রতি ৬০ সেকেন্ডে অটো সিংক ও তাৎক্ষণিক পুশ</p>
           </div>
 
           <div class="space-y-3">
@@ -807,7 +788,7 @@
                 <i class="fa-solid fa-cloud-arrow-down mr-1"></i> এখনই সিংক করুন
               </button>
               <button onclick="openModal('apps-script-modal')" class="px-4 py-2 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold text-xs sm:text-sm transition">
-                <i class="fa-solid fa-code mr-1"></i> Apps Script কোড দেখুন
+                <i class="fa-solid fa-code mr-1"></i> Apps Script (JSONP সহ)
               </button>
             </div>
           </div>
@@ -832,14 +813,14 @@
           <div id="areas-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 max-h-60 overflow-y-auto"></div>
         </div>
 
-        <!-- Local Photo Upload Manager for Leaders & Main Slider (Admin Only) -->
+        <!-- Admin Media & Google Drive Link Converter Manager -->
         <div id="admin-media-manager" class="lg:col-span-2 bg-white rounded-2xl p-5 shadow-sm border-2 border-amber-300 space-y-4 hidden">
           <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
             <div>
               <h3 class="text-lg font-bold text-emerald-950 flex items-center gap-2">
-                <i class="fa-solid fa-images text-amber-600"></i> লোকাল স্টোরেজ থেকে ছবি আপলোড ও স্লাইডার নিয়ন্ত্রণ (এডমিন)
+                <i class="fa-brands fa-google-drive text-amber-600"></i> গুগল ড্রাইভ ছবি ও স্লাইডার নিয়ন্ত্রণ (এডমিন)
               </h3>
-              <p class="text-xs text-slate-500">আপনার মোবাইল বা কম্পিউটার গ্যালারি থেকে সরাসরি দায়িত্বশীলদের ছবি এবং মূল স্লাইডারের ছবি যুক্ত করুন</p>
+              <p class="text-xs text-slate-500">গুগল ড্রাইভের যেকোনো শেয়ার লিংক অথবা গ্যালারির ছবি দিয়ে লোগো, স্লাইডার ও দায়িত্বশীলদের ছবি যুক্ত করুন</p>
             </div>
             <div class="flex flex-wrap gap-2">
               <button onclick="openLeaderModal()" class="px-4 py-2 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold shadow">
@@ -849,6 +830,14 @@
                 <i class="fa-solid fa-image mr-1"></i> মূল স্লাইডারে ছবি যোগ
               </button>
             </div>
+          </div>
+
+          <!-- Custom Logo via Google Drive or Local -->
+          <div class="bg-emerald-50/70 p-3.5 rounded-2xl border border-emerald-200 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <span class="text-xs font-bold text-emerald-950 shrink-0"><i class="fa-solid fa-shield-halved mr-1"></i> কাস্টম লোগো (Drive লিংক):</span>
+            <input type="text" id="custom-logo-drive-input" placeholder="https://drive.google.com/file/d/FILE_ID/view?usp=sharing" class="flex-1 px-3 py-2 rounded-xl border border-emerald-300 text-xs bg-white" />
+            <button onclick="applyCustomLogoFromDrive()" class="px-3.5 py-2 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold shrink-0">লোগো সেট করুন</button>
+            <button onclick="resetDefaultLogo()" class="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold shrink-0">ডিফল্ট লোগো</button>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -906,7 +895,7 @@
 
   <!-- ==================== MODALS ==================== -->
 
-  <!-- 1. Leader / Official Add & Edit Modal (With Local Device Photo Upload!) -->
+  <!-- 1. Leader / Official Add & Edit Modal (Google Drive Link + Local Gallery Upload) -->
   <div id="leader-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4 overflow-y-auto no-print">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-emerald-100 my-8">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -917,14 +906,20 @@
         <input type="hidden" id="leader-edit-id" value="" />
         <input type="hidden" id="leader-photo-data" value="" />
 
-        <!-- Photo Preview & Local File Picker -->
         <div class="flex flex-col items-center gap-2 bg-emerald-50/70 p-3 rounded-2xl border border-emerald-200">
-          <img id="leader-photo-preview" src="https://placehold.co/160x160/064e3b/fbbf24?text=Photo" alt="Preview" class="w-24 h-24 rounded-full object-cover border-2 border-amber-400 shadow" />
+          <img id="leader-photo-preview" src="https://placehold.co/160x160/064e3b/fbbf24?text=Photo"
+               onerror="handleDriveImageError(this)" alt="Preview"
+               class="w-24 h-24 rounded-full object-cover border-2 border-amber-400 shadow" />
           <label class="cursor-pointer px-3.5 py-1.5 rounded-xl bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-bold shadow transition">
-            <i class="fa-solid fa-upload mr-1"></i> ফোন/কম্পিউটার থেকে ছবি নির্বাচন করুন
-            <input type="file" accept="image/*" onchange="handleLocalImageSelect(event, 'leader-photo-preview', 'leader-photo-data', 320)" class="hidden" />
+            <i class="fa-solid fa-upload mr-1"></i> ফোন/কম্পিউটার গ্যালারি থেকে ছবি বাছাই
+            <input type="file" accept="image/*" onchange="handleLocalImageSelect(event, 'leader-photo-preview', 'leader-photo-data', 'leader-drive-url', 320)" class="hidden" />
           </label>
-          <span class="text-[11px] text-slate-500">ছবি স্বয়ংক্রিয়ভাবে কম্প্রেস হয়ে লোকাল স্টোরেজে সেভ হবে</span>
+          <div class="w-full pt-1">
+            <label class="block text-[11px] font-bold text-emerald-900 mb-1">অথবা Google Drive ছবির লিংক দিন:</label>
+            <input type="text" id="leader-drive-url" oninput="previewDriveInput('leader-drive-url', 'leader-photo-preview', 'leader-photo-data')"
+                   placeholder="https://drive.google.com/file/d/FILE_ID/view?usp=sharing"
+                   class="w-full px-3 py-1.5 rounded-xl border border-emerald-300 text-xs bg-white" />
+          </div>
         </div>
 
         <div>
@@ -952,7 +947,7 @@
     </div>
   </div>
 
-  <!-- 2. Main Slider Image Upload Modal (From Local Storage!) -->
+  <!-- 2. Main Slider Image Upload Modal (Google Drive Link + Local Gallery) -->
   <div id="slide-upload-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4 overflow-y-auto no-print">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-amber-200 my-8">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -962,11 +957,19 @@
       <form onsubmit="saveNewMainSlide(event)" class="space-y-3.5 mt-4">
         <input type="hidden" id="slide-photo-data" value="" />
         <div class="flex flex-col items-center gap-2 bg-slate-50 p-3 rounded-2xl border border-slate-200">
-          <img id="slide-photo-preview" src="https://placehold.co/600x260/064e3b/fbbf24?text=Select+Banner+Photo" alt="Banner Preview" class="w-full h-32 rounded-xl object-cover border border-slate-300" />
+          <img id="slide-photo-preview" src="https://placehold.co/600x260/064e3b/fbbf24?text=Select+Banner+Photo"
+               onerror="handleDriveImageError(this)" alt="Banner Preview"
+               class="w-full h-32 rounded-xl object-cover border border-slate-300" />
           <label class="cursor-pointer px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-emerald-950 text-xs font-bold shadow">
-            <i class="fa-solid fa-folder-open mr-1"></i> গ্যালারি / লোকাল স্টোরেজ থেকে ছবি বাছাই করুন *
-            <input type="file" accept="image/*" required onchange="handleLocalImageSelect(event, 'slide-photo-preview', 'slide-photo-data', 900)" class="hidden" />
+            <i class="fa-solid fa-folder-open mr-1"></i> গ্যালারি / লোকাল স্টোরেজ থেকে ছবি বাছাই
+            <input type="file" accept="image/*" onchange="handleLocalImageSelect(event, 'slide-photo-preview', 'slide-photo-data', 'slide-drive-url', 900)" class="hidden" />
           </label>
+          <div class="w-full pt-1">
+            <label class="block text-[11px] font-bold text-slate-700 mb-1">অথবা Google Drive ছবির লিংক দিন:</label>
+            <input type="text" id="slide-drive-url" oninput="previewDriveInput('slide-drive-url', 'slide-photo-preview', 'slide-photo-data')"
+                   placeholder="https://drive.google.com/file/d/FILE_ID/view?usp=sharing"
+                   class="w-full px-3 py-1.5 rounded-xl border border-slate-300 text-xs bg-white" />
+          </div>
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">স্লাইডার শিরোনাম *</label>
@@ -994,13 +997,13 @@
     </div>
   </div>
 
-  <!-- 4. Member Sign Up Modal (NO Password) -->
+  <!-- 4. Member Sign Up Modal (Auto-Generated Sequential Member No + NO Password) -->
   <div id="member-signup-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4 overflow-y-auto no-print">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-emerald-100 my-8">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
         <div>
           <h3 class="text-xl font-bold text-emerald-900" id="member-modal-heading">নতুন সদস্য সাইন আপ ফরম</h3>
-          <p class="text-xs text-slate-500">পাসওয়ার্ডের প্রয়োজন নেই — তথ্য গুগল শিটসে সিঙ্ক হবে</p>
+          <p class="text-xs text-slate-500">সদস্য ক্রমিক নম্বর স্বয়ংক্রিয়ভাবে তৈরি হয় • পাসওয়ার্ড প্রয়োজন নেই</p>
         </div>
         <button onclick="closeModal('member-signup-modal')" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
       </div>
@@ -1008,8 +1011,13 @@
         <input type="hidden" id="edit-member-internal-id" value="" />
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">সদস্য নম্বর *</label>
-            <input type="text" id="reg-member-no" required placeholder="যেমন: 106" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm font-bold text-emerald-900" />
+            <div class="flex items-center justify-between mb-1">
+              <label class="text-xs font-bold text-slate-700">সদস্য নম্বর (অটো) *</label>
+              <button type="button" onclick="regenerateMemberNo()" class="text-[11px] font-bold text-emerald-700 hover:underline" title="নতুন ক্রমিক নম্বর জেনারেট করুন">
+                <i class="fa-solid fa-rotate"></i> অটো নং
+              </button>
+            </div>
+            <input type="text" id="reg-member-no" required placeholder="101" class="w-full px-3.5 py-2.5 rounded-xl border border-emerald-300 bg-emerald-50/50 text-sm font-bold text-emerald-900" />
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">মোবাইল নম্বর *</label>
@@ -1039,7 +1047,7 @@
     </div>
   </div>
 
-  <!-- 5. Member Login Modal (Member No + Mobile ONLY) -->
+  <!-- 5. Member Login Modal -->
   <div id="member-login-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4 no-print">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-emerald-100">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -1065,7 +1073,7 @@
     </div>
   </div>
 
-  <!-- 6. Admin Login Modal (BAHADURPUR / 529587) -->
+  <!-- 6. Admin Login Modal -->
   <div id="admin-login-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4 no-print">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-amber-200">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -1147,37 +1155,49 @@
     <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl my-8" id="member-profile-content"></div>
   </div>
 
-  <!-- 10. Google Apps Script Code Modal -->
+  <!-- 10. Google Apps Script Code Modal (With JSONP Support) -->
   <div id="apps-script-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4 overflow-y-auto no-print">
     <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl my-8">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-        <h3 class="text-lg font-bold text-slate-800">Google Apps Script (Auto-Sync Read & Write)</h3>
+        <h3 class="text-lg font-bold text-slate-800">Google Apps Script (Auto-Sync + JSONP)</h3>
         <button onclick="closeModal('apps-script-modal')" class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="mt-3 space-y-3 text-xs text-slate-600">
-        <p>১. Google Sheet খুলে <b>Extensions &rarr; Apps Script</b>-এ নিচের কোডটি পেস্ট করে <b>Deploy &rarr; New Deployment &rarr; Web App</b> (Who has access: <b>Anyone</b>) করুন।</p>
+        <p>১. Google Sheet খুলে <b>Extensions &rarr; Apps Script</b>-এ নিচের কোডটি পেস্ট করে <b>Deploy &rarr; New Deployment &rarr; Web App</b> (Execute as: <b>Me</b>, Who has access: <b>Anyone</b>) করুন।</p>
         <pre id="apps-script-code-box" class="bg-slate-900 text-emerald-300 p-3 rounded-xl overflow-x-auto text-[11px] leading-relaxed">function doPost(e) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var body = JSON.parse(e.postData.contents || '{}');
-  var sheetName = body.sheet || 'Transactions';
-  var sheet = ss.getSheetByName(sheetName);
-  if (!sheet) {
-    sheet = ss.insertSheet(sheetName);
-    sheet.appendRow(['SyncTime', 'ID', 'JSON_Data']);
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var body = JSON.parse(e.postData.contents || '{}');
+    var sheetName = body.sheet || 'Transactions';
+    var sheet = ss.getSheetByName(sheetName);
+    if (!sheet) {
+      sheet = ss.insertSheet(sheetName);
+      sheet.appendRow(['SyncTime', 'ID', 'JSON_Data']);
+    }
+    sheet.appendRow([new Date(), body.id || '', JSON.stringify(body.payload)]);
+    return ContentService.createTextOutput(JSON.stringify({status: 'success'})).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({status: 'error', message: err.message})).setMimeType(ContentService.MimeType.JSON);
   }
-  sheet.appendRow([new Date(), body.id || '', JSON.stringify(body.payload)]);
-  return ContentService.createTextOutput(JSON.stringify({status: 'success'})).setMimeType(ContentService.MimeType.JSON);
 }
 
 function doGet(e) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheets = ['Members', 'Ledger', 'Charmonai', 'Mahfil'];
-  var result = { status: 'success' };
-  sheets.forEach(function(name) {
-    var sh = ss.getSheetByName(name);
-    result[name] = sh ? sh.getDataRange().getValues() : [];
-  });
-  return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheets = ['Members', 'Ledger', 'Charmonai', 'Mahfil'];
+    var result = { status: 'success' };
+    sheets.forEach(function(name) {
+      var sh = ss.getSheetByName(name);
+      result[name] = sh ? sh.getDataRange().getValues() : [];
+    });
+    var cb = e && e.parameter && e.parameter.callback;
+    if (cb) {
+      return ContentService.createTextOutput(cb + '(' + JSON.stringify(result) + ')').setMimeType(ContentService.MimeType.JAVASCRIPT);
+    }
+    return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({status: 'error', message: err.message})).setMimeType(ContentService.MimeType.JSON);
+  }
 }</pre>
         <button onclick="copyAppsScriptCode()" class="px-4 py-2 rounded-xl bg-emerald-700 text-white font-bold text-xs">কোড কপি করুন</button>
       </div>
@@ -1189,7 +1209,6 @@ function doGet(e) {
 
   <!-- ==================== JAVASCRIPT LOGIC ==================== -->
   <script>
-    // ==================== DEFAULT DATA ====================
     const DEFAULT_AREAS = [
       "পশ্চিম বাহাদুরপুর", "আলগী", "কালাপুর", "মিঠাপুর", "হবিগঞ্জ",
       "টুরগা কান্দি", "মিয়ারচর", "উত্তর দুধখালী", "রাজার হাট", "বাহাদুরপুর"
@@ -1216,7 +1235,7 @@ function doGet(e) {
       {
         id: "ld1",
         name: "মাওলানা আব্দুর রহমান",
-        role: "ছদর (সভাপতি), বাহাদুরপুর ইউনিয়ন শাখা",
+        role: "ছদর (সভাপতি) — ইউনিয়ন শাখা পরিচালনা ও দাওয়াতী তদারকি",
         area: "বাহাদুরপুর",
         mobile: "01711651029",
         photo: "https://placehold.co/200x200/064e3b/fbbf24?text=Sadar"
@@ -1224,7 +1243,7 @@ function doGet(e) {
       {
         id: "ld2",
         name: "মোঃ কামরুজ্জামান খান",
-        role: "সাধারণ সম্পাদক, বাহাদুরপুর ইউনিয়ন শাখা",
+        role: "সাধারণ সম্পাদক — সাংগঠনিক কার্যক্রম, সভা ও সদস্য সমন্বয়",
         area: "পশ্চিম বাহাদুরপুর",
         mobile: "01716056348",
         photo: "https://placehold.co/200x200/065f46/ffffff?text=Secretary"
@@ -1232,7 +1251,7 @@ function doGet(e) {
       {
         id: "ld3",
         name: "হাফেজ মোঃ ইব্রাহিম",
-        role: "কোষাধ্যক্ষ ও রশিদ বই তত্ত্বাবধায়ক",
+        role: "কোষাধ্যক্ষ — আয়-ব্যয় হিসাব, চরমোনাই রশিদ বই ও মাহফিল তহবিল",
         area: "আলগী",
         mobile: "01735817413",
         photo: "https://placehold.co/200x200/047857/fef08a?text=Treasurer"
@@ -1271,6 +1290,7 @@ function doGet(e) {
       areas: [],
       slides: [],
       leaders: [],
+      customLogoUrl: "",
       categories: {},
       members: [],
       ledger: [],
@@ -1291,6 +1311,7 @@ function doGet(e) {
     window.onload = function () {
       loadAppState();
       setDefaultDates();
+      applyCustomLogoOnLoad();
       renderAuthHeader();
       populateAllAreaDropdowns();
       updateLedgerCategoriesDropdown();
@@ -1303,7 +1324,7 @@ function doGet(e) {
 
     function loadAppState() {
       try {
-        const saved = localStorage.getItem("bmc_bahadurpur_v2");
+        const saved = localStorage.getItem("bmc_bahadurpur_v3");
         if (saved) {
           const p = JSON.parse(saved);
           appState = {
@@ -1312,6 +1333,7 @@ function doGet(e) {
             areas: p.areas?.length ? p.areas : [...DEFAULT_AREAS],
             slides: p.slides?.length ? p.slides : [...DEFAULT_SLIDES],
             leaders: p.leaders?.length ? p.leaders : [...DEFAULT_LEADERS],
+            customLogoUrl: p.customLogoUrl || "",
             categories: p.categories || JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)),
             members: p.members || [...SAMPLE_MEMBERS],
             ledger: p.ledger || [...SAMPLE_LEDGER],
@@ -1335,6 +1357,8 @@ function doGet(e) {
         if (urlEl) urlEl.value = appState.googleSheetUrl;
         const chkEl = document.getElementById("auto-sync-checkbox");
         if (chkEl) chkEl.checked = appState.autoSync;
+        const logoInput = document.getElementById("custom-logo-drive-input");
+        if (logoInput) logoInput.value = appState.customLogoUrl;
       } catch (err) {
         console.error("State load error:", err);
       }
@@ -1342,7 +1366,7 @@ function doGet(e) {
 
     function saveAppState() {
       try {
-        localStorage.setItem("bmc_bahadurpur_v2", JSON.stringify(appState));
+        localStorage.setItem("bmc_bahadurpur_v3", JSON.stringify(appState));
       } catch (err) {
         showToast("লোকাল স্টোরেজ পূর্ণ! অনুগ্রহ করে পুরোনো বড় ছবি মুছে ফেলুন।", "error");
       }
@@ -1356,10 +1380,81 @@ function doGet(e) {
       });
     }
 
-    // ==================== LOCAL IMAGE UPLOAD & COMPRESSION ====================
-    function handleLocalImageSelect(event, previewImgId, hiddenInputId, maxWidth) {
+    // ==================== AUTO MEMBER NUMBER GENERATOR ====================
+    function getNextSequentialMemberNo() {
+      let maxNum = 100;
+      (appState.members || []).forEach(m => {
+        const parsed = parseInt(String(m.memberNo || "").replace(/[^0-9]/g, ""), 10);
+        if (!isNaN(parsed) && parsed > maxNum) {
+          maxNum = parsed;
+        }
+      });
+      return String(maxNum + 1);
+    }
+
+    function regenerateMemberNo() {
+      const nextNo = getNextSequentialMemberNo();
+      const input = document.getElementById("reg-member-no");
+      if (input) {
+        input.value = nextNo;
+        showToast(`স্বয়ংক্রিয় সদস্য নম্বর #${nextNo} সেট করা হয়েছে।`, "info");
+      }
+    }
+
+    // ==================== GOOGLE DRIVE IMAGE CONVERTER & LOCAL UPLOAD ====================
+    function extractDriveFileId(url) {
+      if (!url || typeof url !== "string") return null;
+      const trimmed = url.trim();
+      const patterns = [
+        /\/file\/d\/([a-zA-Z0-9_-]{10,})/,
+        /[?&]id=([a-zA-Z0-9_-]{10,})/,
+        /\/d\/([a-zA-Z0-9_-]{10,})/,
+        /thumbnail\?id=([a-zA-Z0-9_-]{10,})/
+      ];
+      for (const pat of patterns) {
+        const match = trimmed.match(pat);
+        if (match && match[1]) return match[1];
+      }
+      return null;
+    }
+
+    function convertDriveUrl(rawUrl) {
+      if (!rawUrl || typeof rawUrl !== "string") return "";
+      const clean = rawUrl.trim();
+      if (clean.startsWith("data:image/")) return clean;
+
+      const fileId = extractDriveFileId(clean);
+      if (fileId) {
+        return `https://lh3.googleusercontent.com/d/${fileId}`;
+      }
+      return clean;
+    }
+
+    function handleDriveImageError(imgEl) {
+      const currentSrc = imgEl.getAttribute("src") || "";
+      const fileId = extractDriveFileId(currentSrc);
+      if (fileId && !currentSrc.includes("drive.google.com/thumbnail")) {
+        imgEl.setAttribute("src", `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`);
+        return;
+      }
+      imgEl.onerror = null;
+      imgEl.setAttribute("src", "https://placehold.co/400x260/064e3b/fbbf24?text=Mujahid+Committee");
+    }
+
+    function previewDriveInput(inputId, previewId, hiddenId) {
+      const raw = document.getElementById(inputId).value.trim();
+      if (!raw) return;
+      const direct = convertDriveUrl(raw);
+      const img = document.getElementById(previewId);
+      img.onerror = function () { handleDriveImageError(img); };
+      img.src = direct;
+      document.getElementById(hiddenId).value = direct;
+    }
+
+    function handleLocalImageSelect(event, previewImgId, hiddenInputId, driveInputId, maxWidth) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
+      if (driveInputId) document.getElementById(driveInputId).value = "";
 
       const reader = new FileReader();
       reader.onload = function (e) {
@@ -1386,6 +1481,36 @@ function doGet(e) {
       reader.readAsDataURL(file);
     }
 
+    function applyCustomLogoFromDrive() {
+      if (appState.role !== "admin") return;
+      const raw = document.getElementById("custom-logo-drive-input").value.trim();
+      if (!raw) {
+        showToast("অনুগ্রহ করে গুগল ড্রাইভ ছবির লিংক দিন।", "error");
+        return;
+      }
+      const direct = convertDriveUrl(raw);
+      appState.customLogoUrl = direct;
+      saveAppState();
+      applyCustomLogoOnLoad();
+      showToast("কাস্টম লোগো আপডেট করা হয়েছে!", "success");
+    }
+
+    function resetDefaultLogo() {
+      if (appState.role !== "admin") return;
+      appState.customLogoUrl = "";
+      document.getElementById("custom-logo-drive-input").value = "";
+      saveAppState();
+      location.reload();
+    }
+
+    function applyCustomLogoOnLoad() {
+      if (!appState.customLogoUrl) return;
+      const box = document.getElementById("header-logo-box");
+      if (box) {
+        box.innerHTML = `<img src="${appState.customLogoUrl}" onerror="handleDriveImageError(this)" alt="লোগো" class="w-full h-full object-contain rounded-xl" />`;
+      }
+    }
+
     // ==================== LEADERS SLIDER (RIGHT SIDEBAR) ====================
     function renderLeaderSlider() {
       const body = document.getElementById("leader-slider-body");
@@ -1400,20 +1525,21 @@ function doGet(e) {
 
       if (leaderSlideIdx >= appState.leaders.length) leaderSlideIdx = 0;
       const ld = appState.leaders[leaderSlideIdx];
+      const photoUrl = convertDriveUrl(ld.photo);
       const waPhone = formatBDPhoneForWhatsApp(ld.mobile || "");
 
       body.innerHTML = `
-        <div class="w-full flex flex-col items-center animate-fade-in">
+        <div class="w-full flex flex-col items-center">
           <div class="relative mb-3">
-            <img src="${ld.photo}" alt="${ld.name}"
-                 onerror="this.src='https://placehold.co/200x200/064e3b/fbbf24?text=Leader'"
+            <img src="${photoUrl}" alt="${ld.name}"
+                 onerror="handleDriveImageError(this)"
                  class="w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-amber-400 shadow-lg bg-white" />
             <span class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-0.5 rounded-full bg-emerald-800 text-amber-300 text-[11px] font-bold shadow">
               ${ld.area || 'বাহাদুরপুর'}
             </span>
           </div>
           <h4 class="text-base sm:text-lg font-bold text-emerald-950 mt-1">${ld.name}</h4>
-          <p class="text-xs sm:text-sm font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1 rounded-xl mt-1">
+          <p class="text-xs sm:text-sm font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-xl mt-1 leading-snug">
             ${ld.role}
           </p>
           ${ld.mobile ? `
@@ -1454,6 +1580,7 @@ function doGet(e) {
       document.getElementById("leader-name").value = "";
       document.getElementById("leader-role").value = "";
       document.getElementById("leader-mobile").value = "";
+      document.getElementById("leader-drive-url").value = "";
       document.getElementById("leader-photo-data").value = "https://placehold.co/200x200/064e3b/fbbf24?text=Photo";
       document.getElementById("leader-photo-preview").src = "https://placehold.co/200x200/064e3b/fbbf24?text=Photo";
       document.getElementById("leader-modal-title").innerText = "নতুন দায়িত্বশীল ও ছবি যুক্ত করুন";
@@ -1467,7 +1594,8 @@ function doGet(e) {
           document.getElementById("leader-area").value = ld.area;
           document.getElementById("leader-mobile").value = ld.mobile || "";
           document.getElementById("leader-photo-data").value = ld.photo;
-          document.getElementById("leader-photo-preview").src = ld.photo;
+          if (!ld.photo.startsWith("data:image/")) document.getElementById("leader-drive-url").value = ld.photo;
+          document.getElementById("leader-photo-preview").src = convertDriveUrl(ld.photo);
           document.getElementById("leader-modal-title").innerText = "দায়িত্বশীলের তথ্য সংশোধন";
         }
       }
@@ -1478,6 +1606,10 @@ function doGet(e) {
       e.preventDefault();
       if (appState.role !== "admin") return;
 
+      const driveInput = document.getElementById("leader-drive-url").value.trim();
+      const hiddenPhoto = document.getElementById("leader-photo-data").value;
+      const finalPhoto = driveInput ? convertDriveUrl(driveInput) : (hiddenPhoto || "https://placehold.co/200x200/064e3b/fbbf24?text=Leader");
+
       const editId = document.getElementById("leader-edit-id").value;
       const entry = {
         id: editId || "ld_" + Date.now(),
@@ -1485,7 +1617,7 @@ function doGet(e) {
         role: document.getElementById("leader-role").value.trim(),
         area: document.getElementById("leader-area").value,
         mobile: document.getElementById("leader-mobile").value.trim(),
-        photo: document.getElementById("leader-photo-data").value || "https://placehold.co/200x200/064e3b/fbbf24?text=Leader"
+        photo: finalPhoto
       };
 
       if (editId) {
@@ -1519,7 +1651,7 @@ function doGet(e) {
       box.innerHTML = appState.leaders.map(ld => `
         <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-200 text-xs">
           <div class="flex items-center gap-2">
-            <img src="${ld.photo}" class="w-9 h-9 rounded-full object-cover border border-emerald-300" />
+            <img src="${convertDriveUrl(ld.photo)}" onerror="handleDriveImageError(this)" class="w-9 h-9 rounded-full object-cover border border-emerald-300" />
             <div>
               <p class="font-bold text-slate-800">${ld.name}</p>
               <p class="text-slate-500">${ld.role}</p>
@@ -1537,7 +1669,7 @@ function doGet(e) {
       const grid = document.getElementById("all-leaders-grid");
       grid.innerHTML = appState.leaders.map(ld => `
         <div class="p-4 rounded-2xl border border-emerald-100 bg-emerald-50/40 flex flex-col items-center text-center">
-          <img src="${ld.photo}" class="w-20 h-20 rounded-full object-cover border-2 border-amber-400 shadow mb-2" />
+          <img src="${convertDriveUrl(ld.photo)}" onerror="handleDriveImageError(this)" class="w-20 h-20 rounded-full object-cover border-2 border-amber-400 shadow mb-2" />
           <h4 class="font-bold text-sm text-emerald-950">${ld.name}</h4>
           <p class="text-xs text-amber-800 font-semibold mt-0.5">${ld.role}</p>
           <span class="text-[11px] text-slate-500 mt-1">${ld.area} • ${ld.mobile || ''}</span>
@@ -1546,7 +1678,7 @@ function doGet(e) {
       openModal("all-leaders-modal");
     }
 
-    // ==================== MAIN ISLAMIC SLIDER (WITH LOCAL PHOTO UPLOAD) ====================
+    // ==================== MAIN ISLAMIC SLIDER ====================
     function renderMainSlider() {
       const container = document.getElementById("main-slider-container");
       const dots = document.getElementById("main-slider-dots");
@@ -1554,22 +1686,25 @@ function doGet(e) {
 
       if (mainSlideIdx >= appState.slides.length) mainSlideIdx = 0;
 
-      container.innerHTML = appState.slides.map((s, idx) => `
-        <div class="slide-fade absolute inset-0 w-full h-full ${idx === mainSlideIdx ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}">
-          <img src="${s.image}" alt="${s.title}" onerror="this.src='https://placehold.co/1000x450/064e3b/fbbf24?text=Bangladesh+Mujahid+Committee'" class="w-full h-full object-cover" />
-          <div class="absolute inset-0 bg-gradient-to-r from-emerald-950/90 via-emerald-900/75 to-black/55 flex items-center">
-            <div class="max-w-2xl px-8 sm:px-14 text-white space-y-2.5">
-              <span class="inline-block px-3 py-1 rounded-full bg-amber-400 text-emerald-950 text-xs font-bold shadow">${s.badge || 'বাংলাদেশ মুজাহিদ কমিটি'}</span>
-              <h2 class="text-xl sm:text-2xl md:text-3xl font-bold leading-snug drop-shadow">${s.title}</h2>
-              <p class="text-xs sm:text-sm text-emerald-100">${s.subtitle || ''}</p>
-              <div class="pt-2 flex flex-wrap gap-2">
-                <button onclick="openMemberSignupModal()" class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-500 text-emerald-950 font-bold text-xs shadow">সদস্য সাইন আপ</button>
-                <a href="https://bamuc.org/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white border border-white/30 font-semibold text-xs backdrop-blur">bamuc.org ভিজিট</a>
+      container.innerHTML = appState.slides.map((s, idx) => {
+        const imgUrl = convertDriveUrl(s.image);
+        return `
+          <div class="slide-fade absolute inset-0 w-full h-full ${idx === mainSlideIdx ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}">
+            <img src="${imgUrl}" alt="${s.title}" onerror="handleDriveImageError(this)" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-r from-emerald-950/90 via-emerald-900/75 to-black/55 flex items-center">
+              <div class="max-w-2xl px-8 sm:px-14 text-white space-y-2.5">
+                <span class="inline-block px-3 py-1 rounded-full bg-amber-400 text-emerald-950 text-xs font-bold shadow">${s.badge || 'বাংলাদেশ মুজাহিদ কমিটি'}</span>
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold leading-snug drop-shadow">${s.title}</h2>
+                <p class="text-xs sm:text-sm text-emerald-100">${s.subtitle || ''}</p>
+                <div class="pt-2 flex flex-wrap gap-2">
+                  <button onclick="openMemberSignupModal()" class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-500 text-emerald-950 font-bold text-xs shadow">সদস্য সাইন আপ</button>
+                  <a href="https://bamuc.org/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white border border-white/30 font-semibold text-xs backdrop-blur">bamuc.org ভিজিট</a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      `).join("");
+        `;
+      }).join("");
 
       dots.innerHTML = appState.slides.map((_, idx) => `
         <button onclick="mainSlideIdx=${idx}; renderMainSlider();" class="h-2.5 rounded-full transition ${idx === mainSlideIdx ? 'bg-amber-400 w-6' : 'bg-white/50 w-2.5'}"></button>
@@ -1599,6 +1734,7 @@ function doGet(e) {
 
     function openSlideUploadModal() {
       if (appState.role !== "admin") return;
+      document.getElementById("slide-drive-url").value = "";
       document.getElementById("slide-photo-data").value = "";
       document.getElementById("slide-photo-preview").src = "https://placehold.co/600x260/064e3b/fbbf24?text=Select+Banner+Photo";
       document.getElementById("slide-input-title").value = "";
@@ -1609,9 +1745,12 @@ function doGet(e) {
     function saveNewMainSlide(e) {
       e.preventDefault();
       if (appState.role !== "admin") return;
-      const photoData = document.getElementById("slide-photo-data").value;
+      const driveRaw = document.getElementById("slide-drive-url").value.trim();
+      const hiddenImg = document.getElementById("slide-photo-data").value;
+      const photoData = driveRaw ? convertDriveUrl(driveRaw) : hiddenImg;
+
       if (!photoData) {
-        showToast("অনুগ্রহ করে গ্যালারি থেকে একটি ছবি নির্বাচন করুন।", "error");
+        showToast("অনুগ্রহ করে গুগল ড্রাইভ লিংক দিন অথবা গ্যালারি থেকে ছবি বাছাই করুন।", "error");
         return;
       }
       appState.slides.push({
@@ -1625,7 +1764,7 @@ function doGet(e) {
       saveAppState();
       renderMainSlider();
       closeModal("slide-upload-modal");
-      showToast("লোকাল স্টোরেজ থেকে নতুন স্লাইডার ছবি যুক্ত হয়েছে!", "success");
+      showToast("নতুন স্লাইডার ছবি যুক্ত হয়েছে!", "success");
     }
 
     function deleteMainSlide(id) {
@@ -1648,7 +1787,7 @@ function doGet(e) {
       box.innerHTML = appState.slides.map(s => `
         <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-200 text-xs">
           <div class="flex items-center gap-2">
-            <img src="${s.image}" class="w-12 h-8 rounded object-cover border" />
+            <img src="${convertDriveUrl(s.image)}" onerror="handleDriveImageError(this)" class="w-12 h-8 rounded object-cover border" />
             <span class="font-semibold text-slate-800 line-clamp-1">${s.title}</span>
           </div>
           <button onclick="deleteMainSlide('${s.id}')" class="px-2 py-1 rounded bg-rose-100 text-rose-700"><i class="fa-solid fa-trash"></i></button>
@@ -1656,7 +1795,7 @@ function doGet(e) {
       `).join("");
     }
 
-    // ==================== GOOGLE SHEETS TWO-WAY AUTO SYNC ====================
+    // ==================== GOOGLE SHEETS AUTO SYNC (FETCH + JSONP FALLBACK) ====================
     async function pushToGoogleSheet(sheetName, id, payloadObj) {
       if (!appState.googleSheetUrl) return;
       updateSyncUI("syncing", "শিটে পাঠানো হচ্ছে...");
@@ -1669,8 +1808,39 @@ function doGet(e) {
         });
         updateSyncUI("ok", "সিংক সম্পন্ন");
       } catch (err) {
-        updateSyncUI("error", "সিংক ত্রুটি");
+        updateSyncUI("error", "পুশ ত্রুটি: " + (err.message || "Network"));
       }
+    }
+
+    function fetchSheetDataViaJsonp(baseUrl) {
+      return new Promise((resolve, reject) => {
+        const cbName = "bmcSyncCb_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+        const script = document.createElement("script");
+        const sep = baseUrl.includes("?") ? "&" : "?";
+        const timeout = setTimeout(() => {
+          cleanup();
+          reject(new Error("JSONP Timeout"));
+        }, 12000);
+
+        function cleanup() {
+          clearTimeout(timeout);
+          delete window[cbName];
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        window[cbName] = function (data) {
+          cleanup();
+          resolve(data);
+        };
+
+        script.onerror = function () {
+          cleanup();
+          reject(new Error("Script Load Error"));
+        };
+
+        script.src = `${baseUrl}${sep}callback=${cbName}&t=${Date.now()}`;
+        document.body.appendChild(script);
+      });
     }
 
     async function manualSyncNow(silent = false) {
@@ -1680,25 +1850,37 @@ function doGet(e) {
         return;
       }
       if (!silent) updateSyncUI("syncing", "অটো সিংক হচ্ছে...");
-      try {
-        const res = await fetch(appState.googleSheetUrl + "?t=" + Date.now());
-        const json = await res.json();
-        if (json && json.status === "success") {
-          mergeSheetCollection("Members", json.Members, "memberNo");
-          mergeSheetCollection("Ledger", json.Ledger, "id");
-          mergeSheetCollection("Charmonai", json.Charmonai, "id");
-          mergeSheetCollection("Mahfil", json.Mahfil, "id");
 
-          saveAppState();
-          refreshAllViews();
-          const nowTime = new Date().toLocaleTimeString("bn-BD");
-          const lbl = document.getElementById("last-sync-label");
-          if (lbl) lbl.innerText = "সর্বশেষ অটো সিংক: " + nowTime;
-          updateSyncUI("ok", "অটো সিংক সক্রিয়");
-          if (!silent) showToast("গুগল শিটস থেকে সকল তথ্য সিংক হয়েছে!", "success");
+      let json = null;
+      try {
+        const res = await fetch(appState.googleSheetUrl + "?t=" + Date.now(), { redirect: "follow" });
+        json = await res.json();
+      } catch (fetchErr) {
+        // Fallback to JSONP when fetch is blocked by CORS or redirect policy
+        try {
+          json = await fetchSheetDataViaJsonp(appState.googleSheetUrl);
+        } catch (jsonpErr) {
+          updateSyncUI("error", "সিংক ত্রুটি: URL/Access যাচাই করুন");
+          if (!silent) showToast("গুগল শিট থেকে সিংক করা যায়নি। Web App Access 'Anyone' আছে কিনা দেখুন।", "error");
+          return;
         }
-      } catch (e) {
-        updateSyncUI("error", "অফলাইন / সিংক ব্যর্থ");
+      }
+
+      if (json && json.status === "success") {
+        mergeSheetCollection("Members", json.Members, "memberNo");
+        mergeSheetCollection("Ledger", json.Ledger, "id");
+        mergeSheetCollection("Charmonai", json.Charmonai, "id");
+        mergeSheetCollection("Mahfil", json.Mahfil, "id");
+
+        saveAppState();
+        refreshAllViews();
+        const nowTime = new Date().toLocaleTimeString("bn-BD");
+        const lbl = document.getElementById("last-sync-label");
+        if (lbl) lbl.innerText = "সর্বশেষ অটো সিংক: " + nowTime;
+        updateSyncUI("ok", "অটো সিংক সক্রিয়");
+        if (!silent) showToast("গুগল শিটস থেকে সকল তথ্য সিংক হয়েছে!", "success");
+      } else {
+        updateSyncUI("error", "সিংক ত্রুটি: " + (json?.message || "Invalid Response"));
       }
     }
 
@@ -1751,7 +1933,7 @@ function doGet(e) {
       appState.autoSync = document.getElementById("auto-sync-checkbox").checked;
       saveAppState();
       startAutoSyncEngine();
-      showToast("গুগল শিটস অটো-সিংক সেটিংস সংরক্ষিত হয়েছে!", "success");
+      manualSyncNow(false);
     }
 
     function toggleAutoSyncSetting() {
@@ -1760,7 +1942,7 @@ function doGet(e) {
       startAutoSyncEngine();
     }
 
-    // ==================== AUTHENTICATION (ADMIN & MEMBER) ====================
+    // ==================== AUTHENTICATION ====================
     function handleAdminLogin(e) {
       e.preventDefault();
       const user = document.getElementById("admin-username").value.trim().toUpperCase();
@@ -1938,6 +2120,7 @@ function doGet(e) {
     function openMemberSignupModal() {
       document.getElementById("edit-member-internal-id").value = "";
       document.getElementById("member-signup-form").reset();
+      document.getElementById("reg-member-no").value = getNextSequentialMemberNo();
       document.getElementById("member-modal-heading").innerText = "নতুন সদস্য সাইন আপ ফরম";
       document.getElementById("member-save-btn").innerHTML = `<i class="fa-solid fa-check-circle mr-1"></i> সদস্য নিবন্ধন সম্পন্ন করুন`;
       openModal("member-signup-modal");
@@ -1954,7 +2137,7 @@ function doGet(e) {
       const address = document.getElementById("reg-address").value.trim();
 
       if (!editId && appState.members.some(m => m.memberNo === memberNo)) {
-        showToast(`সদস্য নম্বর "${memberNo}" ইতিমধ্যে নিবন্ধিত আছে!`, "error");
+        showToast(`সদস্য নম্বর "${memberNo}" ইতিমধ্যে নিবন্ধিত আছে! "অটো নং" চাপুন।`, "error");
         return;
       }
 
@@ -1970,7 +2153,7 @@ function doGet(e) {
         const newMember = { id: "m_" + Date.now(), memberNo, mobile, name, father, area, address };
         appState.members.push(newMember);
         pushToGoogleSheet("Members", memberNo, newMember);
-        showToast(`অভিনন্দন ${name}! সদস্য নম্বর ${memberNo} নিবন্ধিত হয়েছে।`, "success");
+        showToast(`অভিনন্দন ${name}! সদস্য নম্বর #${memberNo} নিবন্ধিত হয়েছে।`, "success");
       }
 
       saveAppState();
@@ -2293,7 +2476,6 @@ function doGet(e) {
       `).join("");
     }
 
-    // Charmonai Receipt Book
     function saveCharmonaiEntry(e) {
       e.preventDefault();
       const editId = document.getElementById("charmonai-edit-id").value;
@@ -2387,7 +2569,6 @@ function doGet(e) {
       `).join("");
     }
 
-    // Mahfil Ledger
     function saveMahfilEntry(e) {
       e.preventDefault();
       const editId = document.getElementById("mahfil-edit-id").value;
